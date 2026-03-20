@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <title>🧶 Tresses en TikZ.</title>
+        <meta charset="utf-8">
+        
+        <link href="style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="parametres">
+            <label for="num_tresses">Nombre de tresses</label>
+            <input type="number" id="num_tresses" name="num_tresses" value=3 min=2 max=10 onchange="changer_nombre()" autocomplete="off">
+            
+            <fieldset>
+                <legend>Proportions</legend>
+                
+                <label for="esp_brins">Espacement des brins</label><br>
+                <input type="range" id="esp_brins" name="esp_brins" value=10 min=0 max=20 step=0.1 onchange="n_larg()" autocomplete="off"><br>
+                
+                <label for="haut_crois">Taille des croisements</label><br>
+                <input type="range" id="haut_crois" name="haut_crois" value=10 min=0 max=20 step=0.1 onchange="n_haut()" autocomplete="off"><br>
+                
+                <label for="haut_crois">Taille des pauses</label><br>
+                <input type="range" id="haut_pause" name="haut_pause" value=0 min=0 max=20 step=0.1 onchange="n_pause()" autocomplete="off">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Style des brins</legend>
+                
+                <label for="ep_brins">Épaisseur des brins.</label><br>
+                <input type="range" id="ep_brins" name="ep_brins" value=5 min=0 max=20 step=0.1 onchange="n_ep()" autocomplete="off"><br>
+                
+                <label for="decoupage">Longueur découpée.</label><br>
+                <input type="range" id="decoupage" name="decoupage" value=0.4 min=0 max=0.5 step=0.01 onchange="n_dec()" autocomplete="off"><br>
+                
+                <label for="palette">Palette de couleurs.</label><br>
+                <select name="palette" id="palette" onchange="n_palette()" autocomplete="off">
+                    <option>Monochrome noir</option>
+                    <option>Dégradé de gris</option>
+                    <option>Arc-en-ciel</option>
+                    <option>Arc-en-ciel 2</option>
+                    <option>Degradé rouge-vert</option>
+                    <option>Degradé orange-bleu</option>
+                    <option>Degradé jaune-violet</option>
+                </select>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Style des bords</legend>
+                
+                <label for="bords">Bords des tresses.</label><br>
+                <select name="bords" id="bords" onchange="n_bord()" autocomplete="off">
+                    <option>Rien</option>
+                    <option>Points •••••</option>
+                    <option>Barres -----</option>
+                    <option>Croix ×××××</option>
+                </select>
+            </fieldset>
+        </div>
+        
+        <div id="tresseur">
+            <table>
+                <tr><td>
+                    <div id="tresse">
+                        <canvas id="dessin"></canvas>
+                    </div>    
+                </td></tr>
+                <tr><td>
+                    <div id="generateurs">
+                        <table><tr>
+                            <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub></button></td>
+                            <td><button class="gen" onclick="mult(2)">&sigma;<sub>2</sub></button></td>
+                        </tr><tr>
+                            <td><button class="gen" onclick="imult(1)">&sigma;<sub>1</sub><sup>-1</sup></button></td>
+                            <td><button class="gen" onclick="imult(2)">&sigma;<sub>2</sub><sup>-1</sup></button></td>
+                        </tr></table>
+                    </div>    
+                </td></tr>
+                <tr><td>
+                    <button class="export" onclick="exporter_tikz()">Afficher le code TikZ.</button>
+                </td></tr>
+            </table>
+        </div>
+        
+        <div id="codetikz">
+            <div id="code"></div><br>
+            <button class="fermeture" onclick="fermer()">Fermer la fenêtre.</button>
+        </div>
+        
+        <script src="script.js"></script>
+    </body>
+</html>
