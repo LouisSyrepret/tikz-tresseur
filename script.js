@@ -132,6 +132,16 @@ function maj_couleurs(num) {
     }
 }
 
+function vider_tresse() {
+    TRESSE = [];
+    dessiner();
+}
+
+function raccourcir() {
+    TRESSE.pop();
+    dessiner();
+}
+
 // Dessiner.
 function briser(tr,n) {
     let L = STYLE.dec;
