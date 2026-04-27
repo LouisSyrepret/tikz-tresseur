@@ -84,3 +84,16 @@ fieldset {
 body {
   background-color: royalblue;
 }
+
+#codelatex {
+  font-family: mono;
+  color: #555;
+  font-weight: bold;
+  font-size: 0.8em;
+  max-width: 400px;
+  text-align: center;
+  border: 2px dotted #58d;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin: 0px 5px;
+}

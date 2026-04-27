@@ -75,13 +75,16 @@
                 <tr><td>
                     <div id="generateurs">
                         <table><tr>
-                            <td><button class="gen" onclick="imult(1)">&sigma;<sub>1</sub></button></td>
-                            <td><button class="gen" onclick="imult(2)">&sigma;<sub>2</sub></button></td>
+                            <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub></button></td>
+                            <td><button class="gen" onclick="mult(2)">&sigma;<sub>2</sub></button></td>
                         </tr><tr>
-                            <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub><sup>-1</sup></button></td>
-                            <td><button class="gen" onclick="mult(2)">&sigma;<sub>2</sub><sup>-1</sup></button></td>
+                            <td><button class="gen" onclick="imult(1)">&sigma;<sub>1</sub><sup>-1</sup></button></td>
+                            <td><button class="gen" onclick="imult(2)">&sigma;<sub>2</sub><sup>-1</sup></button></td>
                         </tr></table>
                     </div>    
+                </td></tr>
+                <tr><td>
+					<div id="codelatex"></div>
                 </td></tr>
                 <tr><td>
                     <button class="export" onclick="exporter_tikz()">Afficher le code TikZ.</button>

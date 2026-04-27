@@ -294,8 +294,26 @@ function dessiner() {
             }
             break;
     }
+    maj_codelatex();
 }
 dessiner();
+
+function code(n) {
+	let num; let inv;
+	if(n>0) { num = n; inv = true; }
+	else { num = -n; inv = false; }
+	return [num,inv];
+}
+
+function maj_codelatex() {
+	let LaTeX = '';
+	for(let t = 0; t<TRESSE.length; t++) {
+		let cd = code(TRESSE[t]);
+		LaTeX += '\\sigma_{'+String(cd[0])+'}';
+		if(cd[1]) { LaTeX += '^{-1}'; }
+	}
+	document.getElementById('codelatex').innerHTML = LaTeX;
+}
 
 function _x(pt) { return 50+50*STYLE.larg*pt[0]; }
 function _y(pt) { return 20+50*(STYLE.haut+STYLE.pause)*pt[2]+50*STYLE.haut*(pt[1]-pt[2]); }
