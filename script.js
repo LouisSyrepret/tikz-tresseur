@@ -252,7 +252,9 @@ function barre(x,y,l) {
 }
 
 function dessiner() {
+    let anc_hauteur = cv.height*1;
     cv.width = 100+50*(N-1)*STYLE.larg; cv.height = 40+(TRESSE.length*(STYLE.haut+STYLE.pause)-STYLE.pause)*50;
+    let nou_hauteur = cv.height*1;
     ctx.fillStyle = "white";
     ctx.fillRect(0,0,cv.width,cv.height);
     ctx.lineWidth = STYLE.ep; ctx.lineJoin = "round"; ctx.lineCap = "round";
@@ -295,6 +297,7 @@ function dessiner() {
             break;
     }
     maj_codelatex();
+    window.scrollBy(0,nou_hauteur-anc_hauteur);
 }
 dessiner();
 
