@@ -319,8 +319,8 @@ function _x(pt) { return 50+50*STYLE.larg*pt[0]; }
 function _y(pt) { return 20+50*(STYLE.haut+STYLE.pause)*pt[2]+50*STYLE.haut*(pt[1]-pt[2]); }
 function _ym(pt) { return 20+50*(STYLE.haut+STYLE.pause)*(pt[2]-1)+50*STYLE.haut*(pt[1]-pt[2]+1); }
 
-function mult(n) { TRESSE.push(n); dessiner(); }
-function imult(n) { TRESSE.push(-n); dessiner(); }
+function mult(n) { TRESSE.push(-n); dessiner(); }
+function imult(n) { TRESSE.push(n); dessiner(); }
 
 function fermer() { document.getElementById('codetikz').style.visibility = 'hidden'; }
 fermer();
