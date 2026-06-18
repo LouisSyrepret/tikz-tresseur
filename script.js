@@ -349,7 +349,7 @@ function dessiner() {
         if(action.mouv == 1) {
             if(action.soude) { latexcode += '\\rho_{'+String(action.brin+1)+'}'; }
             else {
-                if(action.dessus) { latexcode += '\\sigma_{'+String(action.brin+1)+'}'; }
+                if(!action.dessus) { latexcode += '\\sigma_{'+String(action.brin+1)+'}'; }
                 else { latexcode += '\\sigma_{'+String(action.brin+1)+'}^{-1}'; }
             }
         }
@@ -362,9 +362,9 @@ function _x(pt) { return 50+50*STYLE.larg*pt[0]; }
 function _y(pt) { return 20+50*(STYLE.haut+STYLE.pause)*pt[2]+50*STYLE.haut*(pt[1]-pt[2]); }
 function _ym(pt) { return 20+50*(STYLE.haut+STYLE.pause)*(pt[2]-1)+50*STYLE.haut*(pt[1]-pt[2]+1); }
 
-function mult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:true, soude:false}); dessiner(); }
+function mult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:false, soude:false}); dessiner(); }
 function smult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:true, soude:true}); dessiner(); }
-function imult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:false, soude:false}); dessiner(); }
+function imult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:true, soude:false}); dessiner(); }
 
 function croisement() {
     let b1 = Number(document.getElementById('premierbrin').value);
