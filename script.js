@@ -285,8 +285,8 @@ function exporter_tikz() {
 
     let tikz = ''; let HAUTEUR = TRESSE.length*(STYLE.haut+STYLE.pause)-STYLE.pause;
     for(let i = 0; i<brins.length; i++) {
-        let b = brins[i]; let co = STYLE.coul[ind[i]];
-        tikz += '\\draw[line width='+String(STYLE.ep/5)+'mm, line join=round, line cap=round, draw={rgb,255:red,'+String(co[0])+'; green,'+String(co[1])+'; blue,'+String(co[2])+'},] ';
+        let b = brins[i]; let co = STYLE.coul[ind[i]]; let ep = STYLE.ep[ind[i]];
+        tikz += '\\draw[line width='+String(ep/5)+'mm, line join=round, line cap=round, draw={rgb,255:red,'+String(co[0])+'; green,'+String(co[1])+'; blue,'+String(co[2])+'},] ';
         for(let k = 0; k<b.length; k++) {
             if(k>0 && b[k][2]>b[k-1][2]) {
                 tikz += '('+String(b[k][0]*STYLE.larg)+','+String(HAUTEUR-(b[k][1]*(STYLE.haut+STYLE.pause)-STYLE.pause))+') --';
@@ -301,7 +301,7 @@ function exporter_tikz() {
     
     for(let j = 0; j<soud.length; j++) {
         let s = soud[j];
-        tikz += '\\fill[fill={rgb,255:red,51;green,51;blue,51}] ('+String(s[0]*STYLE.larg)+','+String(HAUTEUR-(s[1]*(STYLE.haut+STYLE.pause)-STYLE.pause))+') circle ('+String(STYLE.ep/5)+'mm);<br>';
+        tikz += '\\fill[fill={rgb,255:red,'+String(STYLE.colsoud[0])+';green,'+String(STYLE.colsoud[1])+';blue,'+String(STYLE.colsoud[2])+'}] ('+String(s[0]*STYLE.larg)+','+String(HAUTEUR-(s[1]*(STYLE.haut+STYLE.pause)-STYLE.pause))+') circle ('+String(STYLE.soudure/5)+'mm);<br>';
     }
 
     document.getElementById('code').innerHTML = '\\begin{tikzpicture}<br>'+tikz+'\\end{tikzpicture}';
