@@ -342,6 +342,19 @@ function dessiner() {
         ctx.fill();
         ctx.closePath();
     }
+
+    let latexcode = '';
+    for(let i = 0; i<TRESSE.length; i++) {
+        let action = TRESSE[i];
+        if(action.mouv == 1) {
+            if(action.soude) { latexcode += '\\rho_{'+String(action.brin+1)+'}'; }
+            else {
+                if(action.dessus) { latexcode += '\\sigma_{'+String(action.brin+1)+'}'; }
+                else { latexcode += '\\sigma_{'+String(action.brin+1)+'}^{-1}'; }
+            }
+        }
+    }
+    document.getElementById('latexcode').innerHTML = latexcode;
 }
 dessiner();
 

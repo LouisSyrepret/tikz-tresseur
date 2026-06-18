@@ -105,3 +105,13 @@ fieldset {
 body {
   background-color: royalblue;
 }
+
+div#latexcode {
+  max-width: 400px;
+  overflow: auto;
+  font-size: 0.7em;
+  font-family: Courier New;
+  background-color: #ddd;
+  text-align: center;
+  word-wrap: break-word;
+}
