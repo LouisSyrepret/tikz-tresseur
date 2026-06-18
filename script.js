@@ -100,7 +100,7 @@ function n_bord() {
 }
 
 function n_tbord() {
-    STYLE.tbord = Number(document.getElementById('taille_bord').value);
+    STYLE.tbord = Number(document.getElementById('tbord').value);
     dessiner();
 }
 
@@ -122,6 +122,19 @@ function epaissir(i) {
 function n_palette() {
     STYLE.pal = document.getElementById('palette').selectedIndex;
     palettiser(STYLE.pal);
+    dessiner();
+}
+
+function gradientize() {
+    let st_col = dehexer(document.getElementById('brin_0').value);
+    let fi_col = dehexer(document.getElementById('brin_'+String(N-1)).value);
+    
+    for(let i = 0; i<N; i++) {
+        STYLE.coul[i][0] = (st_col[0]*(N-1-i) + fi_col[0]*i)/(N-1);
+        STYLE.coul[i][1] = (st_col[1]*(N-1-i) + fi_col[1]*i)/(N-1);
+        STYLE.coul[i][2] = (st_col[2]*(N-1-i) + fi_col[2]*i)/(N-1);
+    }
+    maj_inputcolors();
     dessiner();
 }
 
@@ -225,54 +238,55 @@ function briser(tr,n) {
             
             let qqchose = false;
             
-            // Notre brin voyage.
-            if(pos == brin) {
-                if(dessus || soude) { // Par-dessus !
-                    qqchose = true;
-                    if(soude) { soudures.push([pos+ajt/2,t+1/2,t]); }
-                    pos += ajt;
-                    trace.push([pos,t+1,t+1]);
-                } else {
-                    trace.push([pos+sajt*L,t+sajt*L/ajt,t]);
-                    brisures.push(structuredClone(trace)); indices.push(i);
-                    trace = [[pos+ajt-L*sajt,t+1-sajt*L/ajt,t],[pos+ajt,t+1,t+1]];
-                    pos += ajt; qqchose = true;
-                }
-            } else {
-                if(brin < pos && pos <= brin+ajt) { // ajt>0
-                    if(!dessus || soude) { // Par-dessus !
-                        qqchose = true;
-                        if(soude) { soudures.push([pos-ajt/2,t+1/2,t]); }
-                        pos -= 1;
-                        trace.push([pos,t+1,t+1]);
-                    } else {
-                        coupure = (pos-brin)/(ajt+1); let eps = 0.5-L;
-                        let plc = Math.max(coupure-eps,0);
-                        let plf = Math.min(coupure+eps,1);
-                        trace.push([pos-plc,t+plc,t]);
-                        brisures.push(structuredClone(trace)); indices.push(i);
-                        trace = [[pos-plf,t+plf,t],[pos-1,t+1,t+1]];
-                        pos -= 1; qqchose = true;
-                    }
-                }
-                if(brin > pos && pos >= brin+ajt) { // ajt<0
-                    if(!dessus || soude) { // Par-dessus !
+            if(ajt != 0) {
+                // Notre brin voyage.
+                if(pos == brin) {
+                    if(dessus || soude) { // Par-dessus !
                         qqchose = true;
                         if(soude) { soudures.push([pos+ajt/2,t+1/2,t]); }
-                        pos += 1;
+                        pos += ajt;
                         trace.push([pos,t+1,t+1]);
                     } else {
-                        coupure = (brin-pos)/(1-ajt); let eps = 0.5-L;
-                        let plc = Math.max(coupure-eps,0);
-                        let plf = Math.min(coupure+eps,1);
-                        trace.push([pos+plc,t+plc,t]);
+                        trace.push([pos+sajt*L,t+sajt*L/ajt,t]);
                         brisures.push(structuredClone(trace)); indices.push(i);
-                        trace = [[pos+plf,t+plf,t],[pos+1,t+1,t+1]];
-                        pos += 1; qqchose = true;
+                        trace = [[pos+ajt-L*sajt,t+1-sajt*L/ajt,t],[pos+ajt,t+1,t+1]];
+                        pos += ajt; qqchose = true;
+                    }
+                } else {
+                    if(brin < pos && pos <= brin+ajt) { // ajt>0
+                        if(!dessus || soude) { // Par-dessus !
+                            qqchose = true;
+                            if(soude) { soudures.push([pos-ajt/2,t+1/2,t]); }
+                            pos -= 1;
+                            trace.push([pos,t+1,t+1]);
+                        } else {
+                            coupure = (pos-brin)/(ajt+1); let eps = 0.5-L;
+                            let plc = Math.max(coupure-eps,0);
+                            let plf = Math.min(coupure+eps,1);
+                            trace.push([pos-plc,t+plc,t]);
+                            brisures.push(structuredClone(trace)); indices.push(i);
+                            trace = [[pos-plf,t+plf,t],[pos-1,t+1,t+1]];
+                            pos -= 1; qqchose = true;
+                        }
+                    }
+                    if(brin > pos && pos >= brin+ajt) { // ajt<0
+                        if(!dessus || soude) { // Par-dessus !
+                            qqchose = true;
+                            if(soude) { soudures.push([pos+ajt/2,t+1/2,t]); }
+                            pos += 1;
+                            trace.push([pos,t+1,t+1]);
+                        } else {
+                            coupure = (brin-pos)/(1-ajt); let eps = 0.5-L;
+                            let plc = Math.max(coupure-eps,0);
+                            let plf = Math.min(coupure+eps,1);
+                            trace.push([pos+plc,t+plc,t]);
+                            brisures.push(structuredClone(trace)); indices.push(i);
+                            trace = [[pos+plf,t+plf,t],[pos+1,t+1,t+1]];
+                            pos += 1; qqchose = true;
+                        }
                     }
                 }
             }
-            
             if(!qqchose) { trace.push([pos,t+1,t+1]); }
         }
         brisures.push(structuredClone(trace)); indices.push(i);
@@ -302,6 +316,25 @@ function exporter_tikz() {
     for(let j = 0; j<soud.length; j++) {
         let s = soud[j];
         tikz += '\\fill[fill={rgb,255:red,'+String(STYLE.colsoud[0])+';green,'+String(STYLE.colsoud[1])+';blue,'+String(STYLE.colsoud[2])+'}] ('+String(s[0]*STYLE.larg)+','+String(HAUTEUR-(s[1]*(STYLE.haut+STYLE.pause)-STYLE.pause))+') circle ('+String(STYLE.soudure/5)+'mm);<br>';
+    }
+    
+    switch(STYLE.bord) {
+        case 1:
+            for(let i = 0; i<N; i++) {
+                tikz += '\\fill[black] ('+String(i*STYLE.larg)+',0) circle ('+String(1.3*STYLE.tbord/5)+'mm) ('+String(i*STYLE.larg)+','+String((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause)+') circle ('+String(1.3*STYLE.tbord/5)+'mm);<br>';
+            }
+            break;
+        case 2:
+            tikz += '\\draw[line width='+String(STYLE.tbord/5)+'mm, line cap=round] (-0.5,0) -- ('+String(0.5+(N-1)*STYLE.larg)+',0);<br>';
+            tikz += '\\draw[line width='+String(STYLE.tbord/5)+'mm, line cap=round] (-0.5,'+String((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause)+') -- ('+String(0.5+(N-1)*STYLE.larg)+','+String((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause)+');<br>';
+            break;
+        case 3:
+            let h = ((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause);
+            for(let i = 0; i<N; i++) {
+                tikz += '\\draw[line width='+String(STYLE.tbord/5)+'mm, line cap=round] ('+String(i*STYLE.larg-1.3*STYLE.tbord/50)+','+String(-1.3*STYLE.tbord/50)+') -- ('+String(i*STYLE.larg+1.3*STYLE.tbord/50)+','+String(1.3*STYLE.tbord/50)+') ('+String(i*STYLE.larg+1.3*STYLE.tbord/50)+','+String(-1.3*STYLE.tbord/50)+') -- ('+String(i*STYLE.larg-1.3*STYLE.tbord/50)+','+String(1.3*STYLE.tbord/50)+');<br>';
+                tikz += '\\draw[line width='+String(STYLE.tbord/5)+'mm, line cap=round] ('+String(i*STYLE.larg-1.3*STYLE.tbord/50)+','+String(h-1.3*STYLE.tbord/50)+') -- ('+String(i*STYLE.larg+1.3*STYLE.tbord/50)+','+String(h+1.3*STYLE.tbord/50)+') ('+String(i*STYLE.larg+1.3*STYLE.tbord/50)+','+String(h-1.3*STYLE.tbord/50)+') -- ('+String(i*STYLE.larg-1.3*STYLE.tbord/50)+','+String(h+1.3*STYLE.tbord/50)+');<br>';
+            }
+            break;
     }
 
     document.getElementById('code').innerHTML = '\\begin{tikzpicture}<br>'+tikz+'\\end{tikzpicture}';
@@ -342,7 +375,27 @@ function dessiner() {
         ctx.fill();
         ctx.closePath();
     }
-
+    
+    ctx.lineWidth = STYLE.tbord;
+    switch(STYLE.bord) {
+        case 1:
+            for(let i = 0; i<N; i++) {
+                rond(50+50*STYLE.larg*i,20,1.3*STYLE.tbord);
+                rond(50+50*STYLE.larg*i,20+50*((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause),1.3*STYLE.tbord);
+            }
+            break;
+        case 2:
+            barre(25,20,50+50*(N-1)*STYLE.larg);
+            barre(25,20+50*((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause),50+50*(N-1)*STYLE.larg);
+            break;
+        case 3:
+            for(let i = 0; i<N; i++) {
+                croix(50+50*STYLE.larg*i,20,1.3*STYLE.tbord);
+                croix(50+50*STYLE.larg*i,20+50*((STYLE.haut+STYLE.pause)*TRESSE.length-STYLE.pause),1.3*STYLE.tbord);
+            }
+            break;
+    }
+    
     let latexcode = '';
     for(let i = 0; i<TRESSE.length; i++) {
         let action = TRESSE[i];
@@ -358,6 +411,34 @@ function dessiner() {
 }
 dessiner();
 
+function rond(x,y,r) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2*Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.closePath();
+}
+
+function croix(x,y,r) {
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x-r, y-r);
+    ctx.lineTo(x+r, y+r);
+    ctx.moveTo(x-r, y+r);
+    ctx.lineTo(x+r, y-r);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+function barre(x,y,l) {
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x+l, y);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 function _x(pt) { return 50+50*STYLE.larg*pt[0]; }
 function _y(pt) { return 20+50*(STYLE.haut+STYLE.pause)*pt[2]+50*STYLE.haut*(pt[1]-pt[2]); }
 function _ym(pt) { return 20+50*(STYLE.haut+STYLE.pause)*(pt[2]-1)+50*STYLE.haut*(pt[1]-pt[2]+1); }
@@ -365,6 +446,7 @@ function _ym(pt) { return 20+50*(STYLE.haut+STYLE.pause)*(pt[2]-1)+50*STYLE.haut
 function mult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:false, soude:false}); dessiner(); }
 function smult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:true, soude:true}); dessiner(); }
 function imult(n) { TRESSE.push({brin:n-1, mouv:+1, dessus:true, soude:false}); dessiner(); }
+function vide() { TRESSE.push({brin:0, mouv:0, dessus:false, soude:false}); dessiner(); }
 
 function croisement() {
     let b1 = Number(document.getElementById('premierbrin').value);

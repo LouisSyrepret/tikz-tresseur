@@ -4,7 +4,7 @@
         <title>🧶 Tresses en TikZ.</title>
         <meta charset="utf-8">
         
-        <link href="style.css" rel="stylesheet" />
+        <link href="style2.css" rel="stylesheet" />
     </head>
     <body>
         <div id="apparence">
@@ -41,7 +41,8 @@
                     <option>Degradé rouge-vert</option>
                     <option>Degradé orange-bleu</option>
                     <option>Degradé jaune-violet</option>
-                </select>
+                </select><br>
+                <button onclick="gradientize()">Degradé</button>
             </fieldset>
             
             <fieldset>
@@ -51,6 +52,20 @@
                 <input type="range" id="t_soudure" name="t_soudure" value=5 min=0 max=30 step=0.5 onchange="n_soud()" autocomplete="off"><br>
                 <label for="c_soudure">Couleur de la soudure:</label>
                 <input type="color" id="c_soudure" name="c_soudure" value='#444' onchange="n_csoud()" autocomplete="off">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Style des bords</legend>
+                
+                <label for="bords">Bords des tresses.</label><br>
+                <select name="bords" id="bords" onchange="n_bord()" autocomplete="off">
+                    <option>Rien</option>
+                    <option>Points •••••</option>
+                    <option>Barres -----</option>
+                    <option>Croix ×××××</option>
+                </select><br>
+                
+                <label for="tbord">Épaisseur du bord:</label><input type="number" id="tbord" name="tbord" value=5 onchange="n_tbord()">
             </fieldset>
         </div>
         
@@ -66,11 +81,12 @@
         </div>
             
         <div id="mouvements">
-            <label for="num_tresses">Nombre de tresses</label>
+            <label for="num_tresses">Nombre de fils</label>
             <input type="number" id="num_tresses" name="num_tresses" value=3 min=2 max=10 onchange="changer_nombre()" autocomplete="off">
             
             <fieldset>
                 <legend>Générateurs</legend>
+                <button onclick="vide()" class="gen">∅</button><br>
                 <div id="generateurs">
                     <table><tr>
                         <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub></button></td>
@@ -106,6 +122,6 @@
             <button class="fermeture" onclick="fermer()">Fermer la fenêtre.</button>
         </div>
         
-        <script src="script.js"></script>
+        <script src="script2.js"></script>
     </body>
 </html>
