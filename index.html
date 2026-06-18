@@ -7,10 +7,7 @@
         <link href="style.css" rel="stylesheet" />
     </head>
     <body>
-        <div id="parametres">
-            <label for="num_tresses">Nombre de tresses</label>
-            <input type="number" id="num_tresses" name="num_tresses" value=3 min=2 max=10 onchange="changer_nombre()" autocomplete="off">
-            
+        <div id="apparence">
             <fieldset>
                 <legend>Proportions</legend>
                 
@@ -28,10 +25,12 @@
                 <legend>Style des brins</legend>
                 
                 <label for="ep_brins">Épaisseur des brins.</label><br>
-                <input type="range" id="ep_brins" name="ep_brins" value=5 min=0 max=20 step=0.1 onchange="n_ep()" autocomplete="off"><br>
+                <input type="range" id="ep_brins" name="ep_brins" value=5 min=0 max=20 step=1 onchange="n_ep()" autocomplete="off"><br>
                 
                 <label for="decoupage">Longueur découpée.</label><br>
                 <input type="range" id="decoupage" name="decoupage" value=0.4 min=0 max=0.5 step=0.01 onchange="n_dec()" autocomplete="off"><br>
+                
+                <div id="coloris"></div>
                 
                 <label for="palette">Palette de couleurs.</label><br>
                 <select name="palette" id="palette" onchange="n_palette()" autocomplete="off">
@@ -46,15 +45,49 @@
             </fieldset>
             
             <fieldset>
-                <legend>Style des bords</legend>
+                <legend>Soudure</legend>
                 
-                <label for="bords">Bords des tresses.</label><br>
-                <select name="bords" id="bords" onchange="n_bord()" autocomplete="off">
-                    <option>Rien</option>
-                    <option>Points •••••</option>
-                    <option>Barres -----</option>
-                    <option>Croix ×××××</option>
-                </select>
+                <label for="t_soudure">Épaisseur de la soudure.</label><br>
+                <input type="range" id="t_soudure" name="t_soudure" value=5 min=0 max=30 step=0.5 onchange="n_soud()" autocomplete="off"><br>
+                <label for="c_soudure">Couleur de la soudure:</label>
+                <input type="color" id="c_soudure" name="c_soudure" value='#444' onchange="n_csoud()" autocomplete="off">
+            </fieldset>
+        </div>
+        
+        <div id="tresseur">
+            <table>
+                <tr><td>
+                    <canvas id="dessin"></canvas>   
+                </td><td>
+                    <canvas id="commande"></canvas>    
+                </td></tr>
+            </table>
+        </div>
+            
+        <div id="mouvements">
+            <label for="num_tresses">Nombre de tresses</label>
+            <input type="number" id="num_tresses" name="num_tresses" value=3 min=2 max=10 onchange="changer_nombre()" autocomplete="off">
+            
+            <fieldset>
+                <legend>Générateurs</legend>
+                <div id="generateurs">
+                    <table><tr>
+                        <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub></button></td>
+                        <td><button class="gen" onclick="mult(2)">&sigma;<sub>2</sub></button></td>
+                    </tr><tr>
+                        <td><button class="gen" onclick="smult(1)">&rho;<sub>1</sub></button></td>
+                        <td><button class="gen" onclick="smult(2)">&rho;<sub>2</sub></button></td>
+                    </tr><tr>
+                        <td><button class="gen" onclick="imult(1)">&sigma;<sub>1</sub><sup>-1</sup></button></td>
+                        <td><button class="gen" onclick="imult(2)">&sigma;<sub>2</sub><sup>-1</sup></button></td>
+                    </tr></table>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Croisement particulier</legend>
+                
+                <span class="croisement">Faire passer le brin n°<input type="number" id="premierbrin" value=1 min=1 max=10><br>par <select id="passage"><option>dessus</option><option>dessous</option></select> le brin n°<input type="number" id="secondbrin" value=2 min=1 max=10>. <button onclick="croisement()">Ok.</button></span>
             </fieldset>
             
             <fieldset>
@@ -63,33 +96,8 @@
                 <button onclick="vider_tresse()">Supprimer la tresse</button><br>
                 <button onclick="raccourcir()">Annuler la dernière étape</button>
             </fieldset>
-        </div>
-        
-        <div id="tresseur">
-            <table>
-                <tr><td>
-                    <div id="tresse">
-                        <canvas id="dessin"></canvas>
-                    </div>    
-                </td></tr>
-                <tr><td>
-                    <div id="generateurs">
-                        <table><tr>
-                            <td><button class="gen" onclick="mult(1)">&sigma;<sub>1</sub></button></td>
-                            <td><button class="gen" onclick="mult(2)">&sigma;<sub>2</sub></button></td>
-                        </tr><tr>
-                            <td><button class="gen" onclick="imult(1)">&sigma;<sub>1</sub><sup>-1</sup></button></td>
-                            <td><button class="gen" onclick="imult(2)">&sigma;<sub>2</sub><sup>-1</sup></button></td>
-                        </tr></table>
-                    </div>    
-                </td></tr>
-                <tr><td>
-					<div id="codelatex"></div>
-                </td></tr>
-                <tr><td>
-                    <button class="export" onclick="exporter_tikz()">Afficher le code TikZ.</button>
-                </td></tr>
-            </table>
+            
+            <button class="export" onclick="exporter_tikz()">Afficher le code TikZ.</button>
         </div>
         
         <div id="codetikz">

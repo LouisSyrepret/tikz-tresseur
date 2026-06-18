@@ -12,7 +12,7 @@
   background-color: #aaa;
   padding: 10px;
   width: 30%; height: 50%;
-  position: fixed;
+  position: absolute;
   top: 10%; right: 2%;
   border-radius: 10px;
 }
@@ -26,6 +26,8 @@ button.fermeture {
 }
 
 div#tresse {
+    height: 500px;
+    overflow: auto;
     text-align: center; 
 }
 
@@ -35,7 +37,7 @@ div#tresse {
 
 button.gen {
   width: 100%;
-  font-size: 1.2em;
+  font-size: 1em;
   font-family: Arial;
   background-color: goldenrod;
   border: 2px solid darkgoldenrod; border-radius: 3px;
@@ -59,13 +61,34 @@ button.export {
     margin-right: auto;
 }
 
-#parametres {
-  position: fixed;
+#apparence {
+  position: absolute;
   top: 0px; left:0px;
   height: 100%; background-color: #ddd;
   padding: 0px 10px;
   font-family: Arial; font-size: 0.9em;
   border-radius: 0px 15px 15px 0px;
+}
+
+#mouvements {
+  position: absolute;
+  top: 0px; right:0px;
+  height: 100%; background-color: #ddd;
+  padding: 0px 10px;
+  font-family: Arial; font-size: 0.9em;
+  border-radius: 15px 0px 0px 15px;
+}
+
+span.croisement input[type="number"] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #555;
+  width: 36px;
+}
+
+span.croisement select {
+  border: none;
+  border-bottom: 2px solid #555;
 }
 
 legend {
@@ -81,18 +104,4 @@ fieldset {
 
 body {
   background-color: royalblue;
-}
-
-#codelatex {
-  font-family: mono;
-  color: #555;
-  font-weight: bold;
-  font-size: 0.8em;
-  max-width: 400px;
-  text-align: center;
-  border: 2px dotted #58d;
-  border-radius: 5px;
-  padding: 2px 5px;
-  margin: 0px 5px;
-  word-wrap: break-word;
 }
